@@ -1,76 +1,120 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { contactInfo } from '../constants/Constants'
 import { Copy, Mail, Check, PhoneForwarded } from 'lucide-react';
-import { useState } from "react";
 import MdiReact from '@mdi/react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/all'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const Icon = MdiReact.default
 
 const Footer = () => {
-    const [copied, setCopied] = useState(false);
+    const [copiedField, setCopiedField] = useState(null);
     const email = "marvinnavarro15@gmail.com";
+    const phone = "+63 906 322 0193";
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(email);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
+    const handleCopy = (field, value) => {
+        navigator.clipboard.writeText(value)
+            .then(() => {
+                setCopiedField(field);
+                setTimeout(() => setCopiedField(null), 1500);
+            })
+            .catch(() => {
+                // Clipboard API can reject (insecure context, denied permission, etc.) —
+                // fail quietly rather than throwing an unhandled rejection.
+            });
     };
+
+    useGSAP(() => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) return;
+
+        gsap.set('.footerReveal', { opacity: 0, y: 30 });
+        gsap.to('.footerReveal', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '#Contact',
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+            },
+        });
+    }, []);
 
     return (
         <div className='relative text-center mt-30' id='Contact'>
-            <h1 className='text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground'>Let’s build something together</h1>
-            <p className='text-sm text-muted-foreground mb-10'>Have a project in mind? I'm currently available for freelance work or full time work and open to new opportunities.</p>
-            
-            <div className=''>
-                <div className='mb-5'>
-                    <div className="inline-flex items-center gap-3 rounded-xl bg-slate-900/70 px-4 py-3 text-sm text-slate-100 shadow-lg backdrop-blur-md border border-white/5">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400">
-                            <Mail size={16} />
-                        </div>
-                        <span className="select-all font-medium"> marvinnavarro15@gmail.com </span>
-                        <button
-                            onClick={handleCopy}
-                            className="ml-2 text-slate-400 transition hover:text-slate-200"
+            <h1 className='footerReveal text-4xl md:text-5xl font-bold mt-4 mb-6 text-secondary-foreground'>Let’s build something together</h1>
+            <p className='footerReveal text-sm text-muted-foreground mb-10'>Have a project in mind? I'm currently available for freelance work or full time work and open to new opportunities.</p>
+
+            <div className='footerReveal flex flex-col items-center gap-5'>
+                <div className="relative inline-flex items-center gap-3 rounded-xl bg-card/70 backdrop-blur-md border border-border px-4 py-3 text-sm text-foreground shadow-lg">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <Mail size={16} />
+                    </div>
+                    <span className="select-all font-medium">{email}</span>
+                    <button
+                        type='button'
+                        aria-label='Copy email address'
+                        onClick={() => handleCopy('email', email)}
+                        className="relative ml-2 text-muted-foreground transition-colors duration-200 hover:text-primary cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                    >
+                        {copiedField === 'email' ? <Check size={16} /> : <Copy size={16} />}
+                        <span
+                            role='status'
+                            aria-live='polite'
+                            className={`pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 rounded-md bg-card border border-border px-2 py-1 text-xs text-foreground shadow-lg transition-all duration-200 ${copiedField === 'email' ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}`}
                         >
-                            {copied ? <Check size={16} /> : <Copy size={16} className='hover:cursor-pointer' />}
-                            <span
-                                className={`pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 rounded-md bg-black px-2 py-1 text-xs text-white transition-all duration-200
-                                ${copied ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}`}
-                                >
-                                Copied!
-                            </span>
-                        </button>
-                    </div>
+                            Copied!
+                        </span>
+                    </button>
                 </div>
-                <div>
-                    <div className="inline-flex items-center gap-3 rounded-xl bg-slate-900/70 px-4 py-3 text-sm text-slate-100 shadow-lg backdrop-blur-md border border-white/5">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400">
-                            <PhoneForwarded size={16} />
-                        </div>
-                        <span className="select-all font-medium"> +63 906 322 0193 </span>
+
+                <div className="relative inline-flex items-center gap-3 rounded-xl bg-card/70 backdrop-blur-md border border-border px-4 py-3 text-sm text-foreground shadow-lg">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <PhoneForwarded size={16} />
                     </div>
+                    <span className="select-all font-medium">{phone}</span>
+                    <button
+                        type='button'
+                        aria-label='Copy phone number'
+                        onClick={() => handleCopy('phone', phone)}
+                        className="relative ml-2 text-muted-foreground transition-colors duration-200 hover:text-primary cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                    >
+                        {copiedField === 'phone' ? <Check size={16} /> : <Copy size={16} />}
+                        <span
+                            role='status'
+                            aria-live='polite'
+                            className={`pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 rounded-md bg-card border border-border px-2 py-1 text-xs text-foreground shadow-lg transition-all duration-200 ${copiedField === 'phone' ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}`}
+                        >
+                            Copied!
+                        </span>
+                    </button>
                 </div>
             </div>
-                
-            <div className='flex flex-row justify-center'>
-                {contactInfo.map((contact, indx) => {
-                    const Icon = MdiReact.default
-                    return(
-                        <div 
-                            onClick={() => window.open(contact.link, "_blank", "noopener,noreferrer")}
-                            className='mt-8 mx-2 flex flex-row rounded-xl bg-slate-900/70 px-4 py-3 text-sm text-muted-foreground shadow-lg backdrop-blur-md border border-white/5 hover:cursor-pointer hover:text-foreground/80' key={indx} >
-                            {/* <contact.icon className='w-5 h-5 mr-1' /> */}
-                                <Icon path={contact.icon} size={0.8} className='w-5 h-5 mr-1' />
-                            {contact.title}
-                        </div>
-                    );
-                })}
+
+            <div className='footerReveal flex flex-row flex-wrap justify-center'>
+                {contactInfo.map((contact, indx) => (
+                    <a
+                        href={contact.link}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        key={indx}
+                        className='mt-8 mx-2 flex flex-row items-center rounded-xl bg-card/70 backdrop-blur-md border border-border px-4 py-3 text-sm text-muted-foreground shadow-lg transition-all duration-300 hover:-translate-y-1 hover:text-primary hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'
+                    >
+                        <Icon path={contact.icon} size={0.8} className='w-5 h-5 mr-1' />
+                        {contact.title}
+                    </a>
+                ))}
             </div>
 
-            <hr className='text-muted-foreground/10 mt-20 mb-10'/>
+            <hr className='footerReveal border-border mt-20 mb-10' />
 
-
-            <p className='text-sm text-muted-foreground/25 mb-15 mx-10'>&#169; 2026 Marvin Navarro Dev • All Rights Reserve • Crafted with precision and passion</p>
-            
-
+            <p className='footerReveal text-sm text-muted-foreground/60 mb-15 mx-10'>&#169; 2026 Marvin Navarro Dev • All Rights Reserved • Crafted with precision and passion</p>
         </div>
     )
 }

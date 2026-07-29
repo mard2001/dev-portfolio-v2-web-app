@@ -10,24 +10,27 @@
 
 
 @theme {
-  --color-background: #0b1220;        
-  --color-foreground: #e5e7eb;         
+  /* Base — warm charcoal-plum instead of navy. Reads as "crafted" rather than "SaaS dashboard". */
+  --color-background: #15121b;
+  --color-foreground: #efe9e2;
 
-  --color-card: #111a2e;             
-  --color-surface: #0f172a;            
+  --color-card: #1d1926;
+  --color-surface: #221d2c;
 
-  --color-primary: #3b82f6;           
-  --color-primary-foreground: #c8c8cf;
+  /* Primary — brass/amber, the "Craft" half of "Code & Craft" */
+  --color-primary: #d6a25e;
+  --color-primary-foreground: #15121b;
 
-  --color-secondary: #6366f1;         
-  --color-secondary-foreground: #c8c8cf;
+  /* Secondary — muted teal, the "Code" half */
+  --color-secondary: #52b3a8;
+  --color-secondary-foreground: #efe9e2;
 
-  --color-muted: #94a3b8;             
-  --color-muted-foreground: #64748b;
+  --color-muted: #9992a3;
+  --color-muted-foreground: #6f6779;
 
-  --color-border: #1e293b;
+  --color-border: #2d2836;
 
-  --color-highlight: #60a5fa;
+  --color-highlight: #ecc98b;
 
   --radius: 0.75rem;
 }
@@ -233,10 +236,6 @@
     animation: float 4s ease-in-out infinite;
   }
   
-  .timeline-glow {
-    box-shadow: 0 0 40px color-mix(in srgb, var(--color-primary) 35%, transparent),
-            0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
-  }
 
   .typeWriter{
     font-family: "Space Grotesk", sans-serif;
@@ -329,7 +328,7 @@
       rgba(0, 0, 0, 0.1),
       rgba(0, 0, 0, 0.7)
       
-    ),  url("/images/background1.png");
+    ),  url("/images/texturedBurntFabric.jpg");
     background-size: cover;
     background-position: center;
     opacity: 0.02;
