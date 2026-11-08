@@ -72,7 +72,7 @@ export const AboutSelfData  =  () => (
 
 export const experiences = [
     {
-        period: "Jun 2026 - Present",
+        period: "Aug 2026 - Present",
         role: "Data Analyst",
         company: "RocketAMS",
         description: [
