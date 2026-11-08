@@ -9,7 +9,7 @@ export const navLinks = [
     { href: "#Testimony", label: "Testimonials" },
 ];
 
-export const shortAboutSelf = `A software engineer with experience in full-stack web development, data analytics, and building scalable, high-performance web applications. I specialize in creating responsive and user-focused solutions, developing robust backend systems, integrating APIs, and transforming data into actionable insights using modern technologies.`;
+export const shortAboutSelf = `A software engineer with experience in full-stack web development, data analytics, and workflow automation. I specialize in building scalable, high-performance web applications, developing robust backend systems, integrating APIs, and automating business processes to improve efficiency. I also have experience transforming complex data into actionable insights through reporting, analysis, and data visualization using modern technologies.`;
 
 export const socMedLinks = [
     {icon: mdiGithub, href:"https://github.com/mard2001"},
@@ -72,6 +72,17 @@ export const AboutSelfData  =  () => (
 
 export const experiences = [
     {
+        period: "Jun 2026 - Present",
+        role: "Data Analyst",
+        company: "RocketAMS",
+        description: [
+                        `Managed Amazon accounts, overseeing catalogue health, listing optimisation, compliance requirements, and promotional activities. Monitored account performance, identified operational issues, and coordinated with internal teams to maintain listing accuracy and account health.`,
+                        `Analysed sales performance, inventory levels, and account metrics to identify growth opportunities and support business decisions. Prepared performance reports, managed client requirements, and coordinated account improvements to drive sales growth and operational efficiency.`
+                    ],
+        technologies: ["SQL", "Big Query", "Amazon Ecosystem", "Excel", "Data Analysis", "Data Visualization"],
+        current: true,
+    },
+    {
         period: "Aug 2025 - Apr 2026",
         role: "Data Analyst",
         company: "Fast Distribution Corp.",
@@ -92,7 +103,7 @@ export const experiences = [
                         ``
                     ],
         technologies: ["Laravel", "PHP", "JavaScript", "jQuery", "SQL", "Google Maps API"],
-        current: true,
+        current: false,
     },
     {
         period: "May 2023",
@@ -122,6 +133,8 @@ export const technologies = [
     { id: 'Docker', iconName: 'Docker', link: '/images/techStacks/docker.png' },
     { id: 'github', iconName: 'GitHub', link: '/images/techStacks/git.png' },
     { id: 'figma', iconName: 'Figma', link: '/images/techStacks/figma.png' },
+    { id: 'goHighLevel', iconName: 'GoHighLevel', link: '/images/techStacks/GHL.jpg' },
+    { id: 'n8n', iconName: 'n8n', link: '/images/techStacks/n8n.jpeg' },
 ]
 
 export const projects = [
@@ -365,7 +378,6 @@ export const contactInfo = [
     { icon: mdiLinkedin, title: 'LinkedIn', link: 'https://www.linkedin.com/in/marvin-navarro-01'},
     { icon: mdiFacebook, title: 'Facebook', link: 'https://www.facebook.com/Marvin.Navarro.01/'},
 ]
-
 
 export const leftData = [
     { icon: mdiApplicationBracketsOutline, header: 'Full-Stack Development', subContent: 'Building end-to-end web applications.'},
